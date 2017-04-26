@@ -1,5 +1,5 @@
 {
-  "name": "vue basic",
+  "name": "vuebasic",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -15,6 +15,7 @@
     "css-loader": "^0.28.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "style-loader": "^0.16.1",
+    "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
     "vue": "^2.2.6",
     "vue-class-component": "^5.0.1",

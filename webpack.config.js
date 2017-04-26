@@ -19,8 +19,9 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.vue\.html$/, loader: 'vue-loader', options: { loaders: { js: 'awesome-typescript-loader?silent=true' } } },
-            { test: /\.ts$/, use: 'awesome-typescript-loader?silent=true' },
+            { test: /\.(vue|vue\.html)$/, loader: 'vue-loader', options: { loaders: { js: 'awesome-typescript-loader?silent=true' } } },
+            //{ test: /\.ts$/, use: 'awesome-typescript-loader?silent=true' },
+            { test: /\.ts$/, loader: 'ts-loader', options: { appendTsSuffixTo: [/\.(vue|vue\.html)$/] } }, // 要在 vue 檔使用 typescript，就要用ts-loader
             { test: /\.css(\?|$)/, use: extractCSS.extract({ use: 'css-loader' }) },
             //{ test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
         ]
@@ -33,7 +34,7 @@ module.exports = {
     },
     plugins: [
         extractCSS,
-        new CheckerPlugin(),
+        //new CheckerPlugin(),
         // enable HMR globally
         new webpack.HotModuleReplacementPlugin(),
         // prints more readable module names in the browser console on HMR updates
