@@ -1,26 +1,22 @@
 <template>
-    <div>
+    <div class="title">
         {{name}}
     </div>
 </template>
 
-<style src="./app.css" />
-<script src="./app.ts"></script>
-
-<!--
-<style>
-    div {
-        color: red;
-    }
+<style scoped>
+div.title {
+    color: red;
+}
 </style>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
 @Component({})
 export default class App extends Vue {
-  name = "Hello, Vue!!!!"
+    name = "Hello, Vue.";
 }
 </script>
--->
+
