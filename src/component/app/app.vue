@@ -1,12 +1,15 @@
 <template>
-    <div class="title">
-        {{name}}
+    <div>
+        <div class="title">
+            {{name}}
+        </div>
+        <b-alert show>{{name}}</b-alert>
     </div>
 </template>
 
 <style scoped>
 div.title {
-    color: red;
+    color: blue;
 }
 </style>
 
@@ -16,7 +19,7 @@ import Component from 'vue-class-component';
 
 @Component({})
 export default class App extends Vue {
-    name = "Hello, Vue.";
+    name = "Hello, Vue is cool!!";
 }
 </script>
 

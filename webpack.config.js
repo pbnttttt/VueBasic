@@ -1,12 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
-//const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
-    const extractCSS = new ExtractTextPlugin('style.css');
-
+    const extractCSS = new ExtractTextPlugin('app.css');
     let cssDev = ['vue-style-loader', 'css-loader'];
     let cssProd = extractCSS.extract({
         use: 'css-loader',
@@ -17,7 +15,10 @@ module.exports = (env) => {
     return [{
         stats: {
             modules: false // 關閉 console 在 built modules 時顯示資訊
-        }, 
+        },
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js']
+        },
         entry: {
             app: './src/boot.ts'
         },
@@ -26,14 +27,9 @@ module.exports = (env) => {
             filename: '[name].js',
             publicPath: '/dist/'
         },
-        resolve: {
-            extensions: ['.ts', '.tsx', '.js']
-            // alias: {
-            //     'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
-            // }
-        },
         module: {
-            rules: [{
+            rules: [
+                {
                     test: /\.vue$/,
                     loader: 'vue-loader',
                     options: {
@@ -45,19 +41,21 @@ module.exports = (env) => {
                         }
                     }
                 },
-                //{ test: /\.tsx?$/, use: 'awesome-typescript-loader?silent=true' },
                 {
                     test: /\.tsx?$/,
                     loader: 'ts-loader',
                     options: {
                         appendTsSuffixTo: [/\.vue$/]
                     }
-                }, 
+                },
                 {
                     test: /\.css(\?|$)/,
                     use: cssConfig
                 },
-                //{ test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
+                {
+                    test: /\.(png|jpg|jpeg|gif|svg)$/,
+                    use: 'url-loader?limit=25000'
+                }
             ]
         },
         devServer: {
@@ -68,11 +66,20 @@ module.exports = (env) => {
         },
         plugins: [
             extractCSS,
-            //new CheckerPlugin(),
             // enable HMR globally
             new webpack.HotModuleReplacementPlugin(),
             // prints more readable module names in the browser console on HMR updates
             new webpack.NamedModulesPlugin(),
-        ]
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': isDevBuild ? '"development"' : '"production"'
+            }),
+            //new webpack.optimize.CommonsChunkPlugin({ name: "vendor" }),
+            new webpack.DllReferencePlugin({
+                context: __dirname,
+                manifest: require('./dist/vendor-manifest.json')
+            })
+        ].concat(isDevBuild ? [] : [
+            new webpack.optimize.UglifyJsPlugin()
+        ])
     }];
 }
