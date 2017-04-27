@@ -20,7 +20,7 @@
                 789
             </div>
             <div class="col-xl-3">
-                <!--<b-alert show>{{name}}</b-alert>-->
+                <b-alert show>{{name}}</b-alert>
             </div>
         </div>
         <div class="media">
@@ -42,7 +42,7 @@ div.title {
 }
 </style>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
