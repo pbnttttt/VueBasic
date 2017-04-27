@@ -53,8 +53,11 @@ module.exports = (env) => {
                     use: cssConfig
                 },
                 {
-                    test: /\.(png|jpg|jpeg|gif|svg)$/,
-                    use: 'url-loader?limit=25000'
+                    test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
+                    use: [
+                        'url-loader?limit=25000&name=images/[name].[ext]',
+                        'image-webpack-loader?bypassOnDebug'
+                    ]
                 }
             ]
         },
